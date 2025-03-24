@@ -1,11 +1,16 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
+from utils.utils import form_unread_message
+from database import db
 
-
-def main_kb():
+async def main_kb(user_id):
     kb_list = [
-        [KeyboardButton(text="📝Написать вопрос", callback_data='get_person')],
+        [KeyboardButton(text="📝Задать вопрос", callback_data='get_person')],
         [KeyboardButton(text="📖 Часто задаваемые вопросы", callback_data='faq_cb')]
     ]
+    unread_messages = await db.get_unread_messages(user_id)
+    if unread_messages:
+        news_msg, msg_sending = form_unread_message(len(unread_messages))
+        kb_list.append(KeyboardButton(text=f"У вас {len(unread_messages)} {news_msg} {msg_sending}", callback_data='read_messages'))
     keyboard = ReplyKeyboardMarkup(
         keyboard=kb_list,
         resize_keyboard=True

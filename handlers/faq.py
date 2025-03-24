@@ -71,4 +71,5 @@ async def send_full_shit(message: Message):
 
 @faq_router.message(F.text == 'Закрыть')
 async def send_full_shit(message: Message):
-  await message.answer("Закрываю меню частозадаваемых вопросов", reply_markup=main_kb())
+  kb = await main_kb(message.from_user.id)
+  await message.answer("Закрываю меню частозадаваемых вопросов", reply_markup=kb)
