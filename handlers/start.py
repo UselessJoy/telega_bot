@@ -30,7 +30,7 @@ async def cmd_start(message: Message):
                          reply_markup=kb)
 
 # @start_router.callback_query(F.data == 'faq_cb')
-@start_router.message(F.text == '📝 Часто задаваемые вопросы')
+@start_router.message(F.text == '📖 Часто задаваемые вопросы')
                           # call: CallbackQuery
 async def to_faq(message: Message):
     await message.answer("Что бы вы хотели узнать?", reply_markup=faq_kb())
