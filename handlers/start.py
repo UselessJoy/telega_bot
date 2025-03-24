@@ -48,7 +48,8 @@ async def set_question(message: Message, state: FSMContext):
       await state.set_state(Question.question)
 
 @start_router.message(F.text == 'Назад')
-async def back(message: Message):
+async def back(message: Message, state: FSMContext):
+    await state.clear()
     kb = await main_kb(message.from_user.id)
     await message.answer("Назад", reply_markup=kb)
 
