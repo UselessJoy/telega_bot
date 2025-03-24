@@ -1,4 +1,5 @@
 import sqlite3
+from typing import Union
 
 async def create_db() -> None:
   db_connection = sqlite3.connect('database/bot.db')
@@ -52,7 +53,7 @@ async def update_user_data(user_id, serial_number = None, email = None):
   db_connection.commit()
   db_connection.close()
 
-async def get_user_topic(user_id) -> tuple | None:
+async def get_user_topic(user_id) -> Union[tuple, None]:
   db_connection = sqlite3.connect('database/bot.db')
   cursor = db_connection.cursor()
   res = cursor.execute("SELECT topic_id FROM users WHERE id = ?", (user_id, )).fetchone()
@@ -62,7 +63,7 @@ async def get_user_topic(user_id) -> tuple | None:
   db_connection.close()
   return res
 
-async def get_user(user_id) -> tuple | None:
+async def get_user(user_id) -> Union[tuple, None]:
   db_connection = sqlite3.connect('database/bot.db')
   cursor = db_connection.cursor()
   res = cursor.execute("SELECT * FROM users WHERE id = ?", (user_id, )).fetchone()
@@ -72,7 +73,7 @@ async def get_user(user_id) -> tuple | None:
   db_connection.close()
   return res
 
-async def get_unread_messages(user_id) -> list | None:
+async def get_unread_messages(user_id) -> Union[tuple, None]:
   db_connection = sqlite3.connect('database/bot.db')
   cursor = db_connection.cursor()
   res = cursor.execute("SELECT message FROM messages WHERE user_id = ?", (user_id, )).fetchall()
